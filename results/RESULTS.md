@@ -166,11 +166,11 @@ funding) — is confirmed across all H values tested.
    Small-notional continuity is verified numerically by evaluating formulas at a sequence
    αλ → 0 (Exp 1 edge-case check).
 
-7. **Typographical note (Exp 4, Eq. 73):** The paper prints ν̄_i = ςζ†dt, which appears
+6. **Typographical note (Exp 4, Eq. 73):** The paper prints ν̄_i = ςζ†dt, which appears
    to be a typo; the contextually consistent expression ν̄_i = ξ_{ii}² ςς† dt^{2H} is
    implemented (flagged in code comment).
 
-8. **Monte Carlo paths:** The paper does not specify the number of simulation paths for
+7. **Monte Carlo paths:** The paper does not specify the number of simulation paths for
    validating analytical identities. 100 000 paths are used (Exp 1, 2).
 
 ---

@@ -19,7 +19,6 @@ limit for Gaussian processes including fractional Ornstein-Uhlenbeck processes.
 ├── AGENTS.md
 ├── requirements.txt
 ├── reproduce.sh
-├── .env.example          (not needed: experiments use synthetic data only)
 ├── src/                  # Library modules
 │   ├── config.py         # All experiment parameters
 │   ├── entropic_pricing.py  # Single-interval quadratic Gaussian formulas
