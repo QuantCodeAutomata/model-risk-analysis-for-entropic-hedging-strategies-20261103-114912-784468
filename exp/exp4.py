@@ -98,9 +98,13 @@ def run_xi_bounds() -> None:
         print(f"  H={H:.1f}: max|lhs-rhs| = {max_err:.2e} {'✓' if max_err < 1e-12 else '✗'}")
 
 
-def compute_penalties_at_dt(H: float, dt: float, i_target: int = 5) -> dict:
-    """Compute penalties at a fixed interval i_target for given H and dt."""
-    n = max(i_target + 2, 8)
+def compute_penalties_at_dt(H: float, dt: float, i_target: int = 15) -> dict:
+    """Compute penalties at a fixed interval i_target for given H and dt.
+
+    i_target should be large enough that the fBm Cholesky diagonal ξ_{ii}
+    has converged to its asymptotic value; i_target=15 is sufficient for H ≥ 0.2.
+    """
+    n = max(i_target + 5, 20)
     try:
         fou = make_fou(H, n, dt)
     except Exception as e:
@@ -148,7 +152,8 @@ def run_asymptotic_scaling() -> dict:
       slope of chi_sigma vs dt: 2H
       slope of chi_s    vs dt: 2H
     """
-    i_target = 5
+    # i_target=15 ensures the fBm Cholesky diagonal has converged for H ≥ 0.2
+    i_target = 15
     results = {}
 
     for H in EXP4_HURST_VALUES:

@@ -101,7 +101,8 @@ EXP4_VARSIGMA_MAT = np.eye(2)                    # normal volatility matrix (2×
 EXP4_X0 = np.zeros(2)                            # initial factor value (2D)
 
 # DT grid for asymptotic scaling (not specified in the paper)
-EXP4_DT_GRID = np.logspace(-2, -0.3, 10)  # dt values for log-log regression
+EXP4_DT_GRID = np.logspace(-3, -0.3, 12)  # dt values for log-log regression; starts at dt=0.001 so
+# rough processes (H≈0.2) reach the asymptotic regime (paper Eq 76–84)
 EXP4_N_INTERVALS: int = 50               # number of intervals per path
 EXP4_N_PATHS: int = 5_000
 EXP4_SEED: int = 42

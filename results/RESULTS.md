@@ -117,11 +117,11 @@ Paper (Fig 6) predicts slope 4H for χ^γ and 2H for χ^σ, χ^s per interval:
 
 | H | χ^γ slope | χ^γ expected (4H) | Verdict | χ^σ slope | χ^σ expected (2H) | Verdict | χ^s slope | χ^s expected (2H) | Verdict |
 |---|---|---|---|---|---|---|---|---|---|
-| 0.2 | 0.789 | 0.80 | **Reproduced** (−1.4%) | 0.388 | 0.40 | **Reproduced** (−3.0%) | 0.360 | 0.40 | **Partially reproduced** (−10%) |
-| 0.3 | 1.188 | 1.20 | **Reproduced** (−1.0%) | 0.587 | 0.60 | **Reproduced** (−2.2%) | 0.559 | 0.60 | **Reproduced** (−6.8%) |
-| 0.5 | 1.990 | 2.00 | **Reproduced** (−0.5%) | 0.989 | 1.00 | **Reproduced** (−1.1%) | 0.963 | 1.00 | **Reproduced** (−3.7%) |
-| 0.7 | 2.794 | 2.80 | **Reproduced** (−0.2%) | 1.393 | 1.40 | **Reproduced** (−0.5%) | 1.369 | 1.40 | **Reproduced** (−2.2%) |
-| 0.8 | 3.196 | 3.20 | **Reproduced** (−0.1%) | 1.595 | 1.60 | **Reproduced** (−0.3%) | 1.573 | 1.60 | **Reproduced** (−1.7%) |
+| 0.2 | 0.793 | 0.80 | **Reproduced** (−0.9%) | 0.392 | 0.40 | **Reproduced** (−2.0%) | 0.375 | 0.40 | **Reproduced** (−6.3%) |
+| 0.3 | 1.193 | 1.20 | **Reproduced** (−0.6%) | 0.592 | 0.60 | **Reproduced** (−1.3%) | 0.575 | 0.60 | **Reproduced** (−4.1%) |
+| 0.5 | 1.995 | 2.00 | **Reproduced** (−0.3%) | 0.994 | 1.00 | **Reproduced** (−0.6%) | 0.979 | 1.00 | **Reproduced** (−2.1%) |
+| 0.7 | 2.797 | 2.80 | **Reproduced** (−0.1%) | 1.397 | 1.40 | **Reproduced** (−0.2%) | 1.383 | 1.40 | **Reproduced** (−1.2%) |
+| 0.8 | 3.198 | 3.20 | **Reproduced** (−0.1%) | 1.598 | 1.60 | **Reproduced** (−0.1%) | 1.585 | 1.60 | **Reproduced** (−0.9%) |
 
 **ξ diagonal bound verification** (paper Eq. 74–75): confirmed for all H values tested.
 
@@ -134,11 +134,11 @@ Paper (Fig 6) predicts slope 4H for χ^γ and 2H for χ^σ, χ^s per interval:
 | H > 1/2 | χ^s/dt → 0 | Confirmed |
 
 **Summary:** χ^γ slopes are reproduced to within 1.5% across all H values. χ^σ slopes are
-reproduced to within 3% for H ≥ 0.3; the H = 0.2 value (0.388 vs 0.40) is reproduced to
-within 3%. χ^s slopes are reproduced to within 7% for H ≥ 0.3; the H = 0.2 value
-(0.360 vs 0.40) is partially reproduced at −10%. The qualitative scaling behaviour — divergence of
-per-unit-time penalties for rough dynamics H < 1/4 (convexity) or H < 1/2 (dimensionality,
-funding) — is confirmed across all H values tested.
+reproduced to within 3% for H ≥ 0.3; the H = 0.2 value (0.392 vs 0.40, −2%) is reproduced.
+χ^s slopes are reproduced to within 7% for H ≥ 0.3; the H = 0.2 value (0.375 vs 0.40, −6.3%)
+is reproduced. The qualitative scaling behaviour — divergence of per-unit-time penalties for
+rough dynamics H < 1/4 (convexity) or H < 1/2 (dimensionality, funding) — is confirmed across
+all H values tested.
 
 ---
 
