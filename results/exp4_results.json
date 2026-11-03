@@ -6,44 +6,44 @@
     0.7,
     0.8
   ],
-  "brownian_chi_sigma_slope": NaN,
+  "brownian_chi_sigma_slope": 0.989293238496486,
   "H_0p2": {
     "H": 0.2,
-    "scaling_slopes_chi_gamma": 0.7806809206605503,
-    "scaling_slopes_chi_sigma": NaN,
-    "scaling_slopes_chi_s": 0.3544253214073491,
+    "scaling_slopes_chi_gamma": 0.7892821988337717,
+    "scaling_slopes_chi_sigma": 0.38798573804641046,
+    "scaling_slopes_chi_s": 0.3603348120977878,
     "expected_chi_gamma_slope": 0.8,
     "expected_chi_sigma_slope": 0.4
   },
   "H_0p3": {
     "H": 0.3,
-    "scaling_slopes_chi_gamma": 1.1791603589296125,
-    "scaling_slopes_chi_sigma": 0.6710266157215636,
-    "scaling_slopes_chi_s": 0.552213573760147,
+    "scaling_slopes_chi_gamma": 1.1884983808224239,
+    "scaling_slopes_chi_sigma": 0.5871203624473554,
+    "scaling_slopes_chi_s": 0.558943570894845,
     "expected_chi_gamma_slope": 1.2,
     "expected_chi_sigma_slope": 0.6
   },
   "H_0p5": {
     "H": 0.5,
-    "scaling_slopes_chi_gamma": 1.9825296165030866,
-    "scaling_slopes_chi_sigma": NaN,
-    "scaling_slopes_chi_s": 0.9575069803405719,
+    "scaling_slopes_chi_gamma": 1.990425372188483,
+    "scaling_slopes_chi_sigma": 0.989293238496486,
+    "scaling_slopes_chi_s": 0.962601105298426,
     "expected_chi_gamma_slope": 2.0,
     "expected_chi_sigma_slope": 1.0
   },
   "H_0p7": {
     "H": 0.7,
-    "scaling_slopes_chi_gamma": 2.7889590640877673,
-    "scaling_slopes_chi_sigma": 1.5936882123387446,
-    "scaling_slopes_chi_s": 1.3674002383886874,
+    "scaling_slopes_chi_gamma": 2.7939861358897167,
+    "scaling_slopes_chi_sigma": 1.3932833350652214,
+    "scaling_slopes_chi_s": 1.3692204086881095,
     "expected_chi_gamma_slope": 2.8,
     "expected_chi_sigma_slope": 1.4
   },
   "H_0p8": {
     "H": 0.8,
-    "scaling_slopes_chi_gamma": 3.1925475822337064,
-    "scaling_slopes_chi_sigma": 1.3485054104404517,
-    "scaling_slopes_chi_s": 1.5729010376863295,
+    "scaling_slopes_chi_gamma": 3.1959546152981964,
+    "scaling_slopes_chi_sigma": 1.5954849626342016,
+    "scaling_slopes_chi_s": 1.5728579491503785,
     "expected_chi_gamma_slope": 3.2,
     "expected_chi_sigma_slope": 1.6
   }

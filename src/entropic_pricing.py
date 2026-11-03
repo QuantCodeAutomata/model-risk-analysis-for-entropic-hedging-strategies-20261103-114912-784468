@@ -453,7 +453,7 @@ def solve_single_interval_entropic_hedge(
 
     # Use mid price for p if not provided
     if p is None:
-        p_probe = 0.0  # placeholder; will be replaced by p_star
+        p_probe = 0.0  # initial value; replaced by p_star below
         hedge, adj, _ = compute_hedge(model, p=p_probe)
         pricing = compute_indifference_price(model, hedge, adj, cal)
         p_final = pricing.p_star

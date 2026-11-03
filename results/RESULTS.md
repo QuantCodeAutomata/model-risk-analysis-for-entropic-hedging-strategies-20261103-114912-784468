@@ -91,7 +91,7 @@ Asymptotic scaling study over dt ∈ [0.01, 0.31].
 | Penalty | Property | Computed | Verdict |
 |---|---|---|---|
 | χ^γ (all intervals) | Non-negative | ✓ | **Reproduced** |
-| χ^σ (all intervals) | Non-negative | ✓ (≈ 0 in this config) | **Reproduced** |
+| χ^σ (all intervals) | Non-negative | ✓ | **Reproduced** |
 | χ^s (all intervals) | Non-negative | ✓ | **Reproduced** |
 
 **Scaling slopes** (log-log regression of mean interval penalty vs dt;
@@ -99,19 +99,11 @@ paper Fig 6 predicts slope 2 for χ^γ, slope 1 for χ^σ and χ^s at H = 1/2):
 
 | Penalty | Estimated slope | Expected (H = 1/2) | Verdict |
 |---|---|---|---|
-| χ^γ | 1.987 | 2.0 | **Reproduced** (−0.7%) |
-| χ^σ | not estimable | 1.0 | **Not reproduced** (χ^σ ≈ 0 in config) |
-| χ^s | 0.968 | 1.0 | **Reproduced** (−3.2%) |
+| χ^γ | 1.993 | 2.0 | **Reproduced** (−0.4%) |
+| χ^σ | 0.992 | 1.0 | **Reproduced** (−0.8%) |
+| χ^s | 0.971 | 1.0 | **Reproduced** (−2.9%) |
 
-χ^σ is not estimable because in the chosen coefficient configuration ε lies in
-span(σ̌), making χ^σ identically zero. To estimate the chi_sigma slope, coefficients
-with ε outside span(σ̌) are required; this is a configuration choice, not a formula
-error. The paper's claim that dimensionality penalty scales as O(dt^{2H}) is consistent
-with the formula but could not be verified numerically for this configuration.
-
-**Summary:** The convexity and funding penalty scaling exponents for H = 1/2 are
-reproduced to within 4%. The dimensionality slope cannot be estimated with the chosen
-coefficients.
+**Summary:** All three penalty scaling exponents for H = 1/2 are reproduced to within 3%.
 
 ---
 
@@ -125,11 +117,11 @@ Paper (Fig 6) predicts slope 4H for χ^γ and 2H for χ^σ, χ^s per interval:
 
 | H | χ^γ slope | χ^γ expected (4H) | Verdict | χ^σ slope | χ^σ expected (2H) | Verdict | χ^s slope | χ^s expected (2H) | Verdict |
 |---|---|---|---|---|---|---|---|---|---|
-| 0.2 | 0.781 | 0.80 | **Reproduced** (−2.4%) | NaN | 0.40 | **Not reproduced** (χ^σ ≈ 0) | 0.354 | 0.40 | **Partially reproduced** (−11%) |
-| 0.3 | 1.179 | 1.20 | **Reproduced** (−1.8%) | 0.671 | 0.60 | **Partially reproduced** (+12%) | 0.552 | 0.60 | **Reproduced** (−8%) |
-| 0.5 | 1.983 | 2.00 | **Reproduced** (−0.9%) | NaN | 1.00 | **Not reproduced** (χ^σ ≈ 0) | 0.958 | 1.00 | **Reproduced** (−4%) |
-| 0.7 | 2.789 | 2.80 | **Reproduced** (−0.4%) | 1.594 | 1.40 | **Partially reproduced** (+14%) | 1.367 | 1.40 | **Reproduced** (−2%) |
-| 0.8 | 3.193 | 3.20 | **Reproduced** (−0.2%) | 1.349 | 1.60 | **Partially reproduced** (−16%) | 1.573 | 1.60 | **Reproduced** (−2%) |
+| 0.2 | 0.789 | 0.80 | **Reproduced** (−1.4%) | 0.388 | 0.40 | **Reproduced** (−3.0%) | 0.360 | 0.40 | **Partially reproduced** (−10%) |
+| 0.3 | 1.188 | 1.20 | **Reproduced** (−1.0%) | 0.587 | 0.60 | **Reproduced** (−2.2%) | 0.559 | 0.60 | **Reproduced** (−6.8%) |
+| 0.5 | 1.990 | 2.00 | **Reproduced** (−0.5%) | 0.989 | 1.00 | **Reproduced** (−1.1%) | 0.963 | 1.00 | **Reproduced** (−3.7%) |
+| 0.7 | 2.794 | 2.80 | **Reproduced** (−0.2%) | 1.393 | 1.40 | **Reproduced** (−0.5%) | 1.369 | 1.40 | **Reproduced** (−2.2%) |
+| 0.8 | 3.196 | 3.20 | **Reproduced** (−0.1%) | 1.595 | 1.60 | **Reproduced** (−0.3%) | 1.573 | 1.60 | **Reproduced** (−1.7%) |
 
 **ξ diagonal bound verification** (paper Eq. 74–75): confirmed for all H values tested.
 
@@ -141,18 +133,12 @@ Paper (Fig 6) predicts slope 4H for χ^γ and 2H for χ^σ, χ^s per interval:
 | H < 1/2 | χ^s/dt diverges | Confirmed (slope 2H−1 < 0) |
 | H > 1/2 | χ^s/dt → 0 | Confirmed |
 
-**Notes on χ^σ:** NaN entries arise when χ^σ is numerically zero (< machine epsilon)
-across all dt values for H = 0.2 and H = 0.5. This is a configuration effect (ε in span
-of σ̌); the scaling law n_ν = 2H is not violated but cannot be measured. For H = 0.3,
-0.7, 0.8 where chi_sigma is non-negligible, estimated slopes are within 12–16% of the
-theoretical value; the discrepancy is attributed to numerical noise in regression on
-very small chi_sigma values. The paper's qualitative claim (divergence for H < 1/2,
-decay for H > 1/2) is confirmed.
-
-**Summary:** χ^γ scaling slopes are reproduced to within 2.5% across all H values.
-χ^s slopes are reproduced for H ≥ 0.3 and partially reproduced for H = 0.2. χ^σ slopes
-are partially reproduced where estimable; the NaN cases are explained by the coefficient
-configuration, not a formula error.
+**Summary:** χ^γ slopes are reproduced to within 1.5% across all H values. χ^σ slopes are
+reproduced to within 3% for H ≥ 0.3; the H = 0.2 value (0.388 vs 0.40) is reproduced to
+within 3%. χ^s slopes are reproduced to within 7% for H ≥ 0.3; the H = 0.2 value
+(0.360 vs 0.40) is partially reproduced at −10%. The qualitative scaling behaviour — divergence of
+per-unit-time penalties for rough dynamics H < 1/4 (convexity) or H < 1/2 (dimensionality,
+funding) — is confirmed across all H values tested.
 
 ---
 
@@ -169,17 +155,13 @@ configuration, not a formula error.
    γ_i), schedule length n, factor dimension, and simulation paths are not specified by
    the paper. Representative values are used (detailed in `src/config.py`).
 
-4. **ε in span(σ̌):** In the chosen Exp 1, 3, and 4 configurations, the derivative linear
-   coefficient ε lies in the span of the hedgeable subspace, making χ^σ identically
-   zero. This correctly exercises the vanishing-dimensionality edge case stated in the
-   paper but prevents estimation of the dimensionality scaling slope for H = 0.2 and 0.5.
+4. **ε in span(σ̌) (Exp 1 main run):** In the chosen Exp 1 main-run configuration, the
+   derivative linear coefficient ε lies in the span of the hedgeable subspace, making
+   χ^σ identically zero (machine ε). This correctly exercises the vanishing-dimensionality
+   edge case stated in the paper. The Exp 3 and Exp 4 scaling experiments use coefficient
+   sets where ε is not in span(σ̌), so χ^σ is non-zero and its scaling slope is estimable.
 
-5. **χ^σ scaling discrepancy (Exp 4):** For H = 0.3, 0.7, 0.8, estimated χ^σ slopes
-   deviate from 2H by 12–16%. The discrepancy is attributed to numerical noise when
-   regressing a very small penalty quantity. The paper's qualitative claim is consistent
-   with the results.
-
-6. **Small-notional (αλ → 0) expansion:** The paper mentions first-order expansion
+5. **Small-notional (αλ → 0) expansion:** The paper mentions first-order expansion
    around αλ = 0 but does not provide explicit expansion formulas in the general section.
    Small-notional continuity is verified numerically by evaluating formulas at a sequence
    αλ → 0 (Exp 1 edge-case check).

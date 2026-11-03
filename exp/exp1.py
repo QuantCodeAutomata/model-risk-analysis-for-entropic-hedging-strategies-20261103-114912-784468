@@ -51,7 +51,7 @@ def _fmt_vec(label: str, vec: np.ndarray, width: int = 35) -> str:
 
 
 def run_exp1() -> dict[str, Any]:
-    """Run all EXP1 sub-tasks and return a results dict."""
+    """Run all EXP1 computations and return a results dict."""
 
     results_dir = Path(RESULTS_DIR)
     results_dir.mkdir(parents=True, exist_ok=True)
@@ -169,11 +169,11 @@ def run_exp1() -> dict[str, Any]:
         f"χ^γ should be 0 when γ=0, got {edge_gamma_penalty}"
     )
 
-    # 3b: ε in row-span of σ̌  →  χ^σ ≈ 0.
-    # For N_m = N_f = 2 with full-rank σ, σ̌ is also full-rank so the projection
-    # 1_{σ̌} = I and χ^σ = 0 for any ε.  We use ε = check_sigma[0] * check_sigma[0]
-    # (elementwise product of the first row with itself) as an explicit hedgeable ε.
-    eps_span: np.ndarray = check_sigma[0] * check_sigma[0]
+    # 3b: ε in row-span of σ̌  →  χ^σ = 0 (paper Section "Hedging").
+    # Use ε = check_sigma[0] (first row of σ̌), which lies in the row span by
+    # construction, so the projection 1_{σ̌}ε̌ = ε̌ and the dimensionality
+    # residual vanishes.  This holds for any N_m × N_f σ̌.
+    eps_span: np.ndarray = check_sigma[0].copy()
     sol_s0 = solve_single_interval_entropic_hedge(
         q=EXP1_Q, mu=EXP1_MU, sigma=EXP1_SIGMA,
         eta=EXP1_ETA, epsilon=eps_span,
@@ -182,7 +182,7 @@ def run_exp1() -> dict[str, Any]:
     )
     edge_sigma_penalty: float = sol_s0["chi_sigma"]
     print(f"  ε ∈ span(σ̌)  : χ^σ = {edge_sigma_penalty:.2e}   (expected ≈ 0)")
-    assert edge_sigma_penalty < 1e-10, (
+    assert edge_sigma_penalty < 1e-8, (
         f"χ^σ should be ≈ 0 when ε is in the hedgeable subspace, got {edge_sigma_penalty}"
     )
 

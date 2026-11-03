@@ -53,18 +53,25 @@ def build_brownian_gp(n: int, dt: float, dim: int,
 
 
 def make_interval_coefficients(n: int, q0: float, dim: int,
-                                 mu_coeff: float, sigma_coeff: float, dt: float,
-                                 eta_coeff: float, epsilon_coeff: float,
-                                 gamma_coeff: float) -> list[IntervalCoefficients]:
-    """Build uniform pricing coefficients for each interval."""
+                                 mu_coeff: float, sigma_coeff: np.ndarray, dt: float,
+                                 eta_coeff: float, epsilon_coeff: np.ndarray,
+                                 gamma_coeff: np.ndarray) -> list[IntervalCoefficients]:
+    """Build uniform pricing coefficients for each interval.
+
+    sigma_coeff: shape (N_m, dim); epsilon_coeff: shape (dim,); gamma_coeff: shape (dim, dim)
+    """
+    sigma_coeff = np.asarray(sigma_coeff)
+    epsilon_coeff = np.asarray(epsilon_coeff)
+    gamma_coeff = np.asarray(gamma_coeff)
+    n_m = sigma_coeff.shape[0]
     coeffs = []
     for i in range(n):
-        q_prev = np.array([q0 + 0.001 * i])
-        mu_i = np.array([q_prev[0] + mu_coeff * dt])
-        sigma_i = np.array([[sigma_coeff]])
-        eta_i = eta_coeff * dt
-        epsilon_i = np.array([epsilon_coeff])
-        gamma_i = np.array([[gamma_coeff]])
+        q_prev = np.full(n_m, q0) + 0.001 * i
+        mu_i = q_prev + mu_coeff * dt
+        sigma_i = sigma_coeff.copy()          # (N_m, dim)
+        eta_i = float(eta_coeff * dt)
+        epsilon_i = epsilon_coeff.copy()      # (dim,)
+        gamma_i = gamma_coeff.copy()          # (dim, dim)
         coeffs.append(IntervalCoefficients(
             q_prev=q_prev, mu_i=mu_i, sigma_i=sigma_i,
             eta_i=eta_i, epsilon_i=epsilon_i, gamma_i=gamma_i,

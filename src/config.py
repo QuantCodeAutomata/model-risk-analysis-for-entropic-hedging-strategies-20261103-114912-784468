@@ -6,23 +6,26 @@ Paper: "Model Risk Analysis for Entropic Hedging Strategies", Paul McCloud (McCl
 # ── Exp 1: Single-interval quadratic Gaussian (general model) ─────────────────
 # Paper does not specify concrete numerical values for the general model;
 # these are representative parameters satisfying the paper's assumptions.
+# N_f > N_m (3 factors, 2 underlyings) gives a non-trivial dimensionality penalty
+# because one factor direction is unhedgeable by the two underlyings.
 
 # Number of factors and underlyings (not specified in the paper)
-EXP1_N_FACTORS: int = 2      # N_f: number of standard normal factors
+EXP1_N_FACTORS: int = 3      # N_f: number of standard normal factors
 EXP1_N_UNDERLYINGS: int = 2  # N_m: number of underlyings
 
 # Underlying initial prices (not specified in the paper; must satisfy q ≠ 0)
 import numpy as np
-EXP1_Q = np.array([1.0, 0.8])          # initial underlying prices
-EXP1_MU = np.array([1.05, 0.84])       # underlying final-price linear means
-EXP1_SIGMA = np.array([[0.15, 0.05],   # underlying final-price factor loadings
-                        [0.08, 0.20]])  # shape (N_m, N_f)
+EXP1_Q = np.array([1.0, 0.8])                  # initial underlying prices
+EXP1_MU = np.array([1.05, 0.84])               # underlying final-price linear means
+EXP1_SIGMA = np.array([[0.15, 0.05, 0.02],     # underlying factor loadings, shape (N_m, N_f)
+                        [0.08, 0.20, 0.03]])    # rank 2 < 3 → 3rd factor is unhedgeable
 
 # Derivative coefficients (not specified in the paper)
-EXP1_ETA: float = 0.5          # derivative constant coefficient
-EXP1_EPSILON = np.array([0.3, 0.4])    # derivative linear factor coefficients
-EXP1_GAMMA = np.array([[0.2, 0.05],    # derivative quadratic factor matrix
-                        [0.05, 0.1]])   # must be symmetric
+EXP1_ETA: float = 0.5
+EXP1_EPSILON = np.array([0.3, 0.4, 0.2])       # 3D; 3rd component is unhedgeable
+EXP1_GAMMA = np.array([[0.20, 0.05, 0.01],     # symmetric (3×3) quadratic factor matrix
+                        [0.05, 0.10, 0.02],
+                        [0.01, 0.02, 0.05]])
 
 # Investor and derivative parameters
 EXP1_ALPHA: float = 1.0   # risk aversion α > 0
@@ -58,24 +61,26 @@ EXP2_SEED: int = 42
 # Hedging schedule and process parameters (not specified in the paper)
 EXP3_N_INTERVALS: int = 20      # number of hedging intervals n
 EXP3_DT: float = 0.05           # interval length dt (total horizon = 1.0)
-EXP3_N_FACTORS: int = 1         # factor dimension
-EXP3_N_UNDERLYINGS: int = 1     # number of underlyings
+# N_f = 2, N_m = 1: one underlying, two factors → dimensionality incompleteness
+EXP3_N_FACTORS: int = 2         # factor dimension (N_f); N_f > N_m gives chi_sigma > 0
+EXP3_N_UNDERLYINGS: int = 1     # number of underlyings (N_m)
 
 # GP process parameters (not specified in the paper)
-EXP3_BETA = np.array([0.0])     # reversion level
-EXP3_KAPPA = np.array([[0.5]])  # reversion rate matrix
-EXP3_VARSIGMA = np.array([[1.0]])  # normal volatility matrix
-EXP3_X0 = np.array([0.0])      # initial factor
+EXP3_BETA = np.zeros(2)                          # reversion level (2D)
+EXP3_KAPPA = np.diag([0.5, 0.5])                 # reversion rate matrix (2×2)
+EXP3_VARSIGMA = np.eye(2)                        # normal volatility matrix (2×2)
+EXP3_X0 = np.zeros(2)                            # initial factor (2D)
 
 # Intervalwise pricing coefficients (not specified in the paper; fixed across intervals)
-EXP3_MU_COEFF: float = 1.0     # underlying mean shift
-EXP3_SIGMA_COEFF: float = 0.2  # underlying factor loading
-EXP3_Q0: float = 1.0           # initial underlying price
-EXP3_ETA_COEFF: float = 0.5    # derivative constant
-EXP3_EPSILON_COEFF: float = 1.0  # derivative linear coefficient
-EXP3_GAMMA_COEFF: float = 0.5  # derivative quadratic coefficient
-EXP3_ALPHA: float = 1.0        # risk aversion
-EXP3_LAMBDA: float = 0.5       # derivative notional
+# sigma_i has shape (1, 2): first factor affects the underlying; second is unhedgeable
+EXP3_Q0: float = 1.0            # initial underlying price
+EXP3_MU_COEFF: float = 1.0      # underlying mean shift
+EXP3_SIGMA_COEFF = np.array([[0.2, 0.0]])        # σ_i shape (1,2): first factor only
+EXP3_ETA_COEFF: float = 0.5     # derivative constant
+EXP3_EPSILON_COEFF = np.array([0.8, 0.5])        # ε_i shape (2,): second factor unhedgeable
+EXP3_GAMMA_COEFF = np.diag([0.3, 0.2])          # γ_i shape (2,2) diagonal
+EXP3_ALPHA: float = 1.0         # risk aversion
+EXP3_LAMBDA: float = 0.5        # derivative notional
 
 # DT grid for asymptotic scaling study (not specified in the paper)
 EXP3_DT_GRID = np.logspace(-2, -0.5, 10)   # refined schedule dt values
@@ -89,10 +94,11 @@ EXP4_H_ROUGH: float = 0.2       # rough regime H < 0.5
 EXP4_H_BROWNIAN: float = 0.5    # Brownian benchmark H = 0.5
 EXP4_H_PERSISTENT: float = 0.8  # persistent regime H > 0.5
 
-EXP4_BETA = np.array([0.0])     # reversion level
-EXP4_KAPPA: float = 0.5         # reversion rate (scalar, 1D)
-EXP4_VARSIGMA: float = 1.0      # normal volatility (scalar, 1D)
-EXP4_X0: float = 0.0            # initial factor value
+# N_f = 2, N_m = 1: one underlying, two FOU factors → dimensionality incompleteness
+EXP4_BETA = np.zeros(2)                          # reversion level (2D)
+EXP4_KAPPA = np.diag([0.5, 0.5])                 # reversion rate matrix (2×2)
+EXP4_VARSIGMA_MAT = np.eye(2)                    # normal volatility matrix (2×2)
+EXP4_X0 = np.zeros(2)                            # initial factor value (2D)
 
 # DT grid for asymptotic scaling (not specified in the paper)
 EXP4_DT_GRID = np.logspace(-2, -0.3, 10)  # dt values for log-log regression
@@ -101,14 +107,15 @@ EXP4_N_PATHS: int = 5_000
 EXP4_SEED: int = 42
 
 # Intervalwise pricing coefficients for FOU scaling study (not specified in the paper)
-EXP4_Q0: float = 1.0           # initial underlying price
-EXP4_MU_COEFF: float = 1.0     # underlying mean shift
-EXP4_SIGMA_COEFF: float = 0.2  # underlying factor loading
-EXP4_ETA_COEFF: float = 0.5    # derivative constant
-EXP4_EPSILON_COEFF: float = 1.0  # derivative linear coefficient
-EXP4_GAMMA_COEFF: float = 0.5  # derivative quadratic coefficient
-EXP4_ALPHA: float = 1.0        # risk aversion
-EXP4_LAMBDA: float = 0.5       # derivative notional
+# sigma_i shape (1,2): first factor affects underlying; second is unhedgeable
+EXP4_Q0: float = 1.0
+EXP4_MU_COEFF: float = 1.0
+EXP4_SIGMA_COEFF = np.array([[0.2, 0.0]])        # σ_i shape (1,2): first factor only
+EXP4_ETA_COEFF: float = 0.5
+EXP4_EPSILON_COEFF = np.array([0.8, 0.5])        # ε_i shape (2,): second factor unhedgeable
+EXP4_GAMMA_COEFF = np.diag([0.3, 0.2])          # γ_i shape (2,2) diagonal
+EXP4_ALPHA: float = 1.0         # risk aversion
+EXP4_LAMBDA: float = 0.5        # derivative notional
 
 # ── Shared ────────────────────────────────────────────────────────────────────
 RESULTS_DIR: str = "results"

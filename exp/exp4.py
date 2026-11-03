@@ -31,7 +31,7 @@ import numpy as np
 
 from src.config import (
     EXP4_HURST_VALUES, EXP4_H_ROUGH, EXP4_H_BROWNIAN, EXP4_H_PERSISTENT,
-    EXP4_KAPPA, EXP4_VARSIGMA, EXP4_X0,
+    EXP4_BETA, EXP4_KAPPA, EXP4_VARSIGMA_MAT, EXP4_X0,
     EXP4_DT_GRID, EXP4_N_INTERVALS, EXP4_N_PATHS, EXP4_SEED,
     EXP4_Q0, EXP4_MU_COEFF, EXP4_SIGMA_COEFF,
     EXP4_ETA_COEFF, EXP4_EPSILON_COEFF, EXP4_GAMMA_COEFF,
@@ -51,28 +51,33 @@ RESULTS.mkdir(exist_ok=True)
 
 
 def make_fou(H: float, n: int, dt: float) -> FractionalOU:
-    """Construct a scalar (dim=1) FOU process."""
+    """Construct a 2D FOU process (N_f=2, N_m=1 gives dimensionality incompleteness)."""
     return FractionalOU(
         n=n, dt=dt, H=H,
-        beta=np.array([0.0]),
-        kappa=np.array([[EXP4_KAPPA]]),
-        varsigma=np.array([[EXP4_VARSIGMA]]),
-        x0=np.array([EXP4_X0]),
+        beta=EXP4_BETA.copy(),
+        kappa=EXP4_KAPPA.copy(),
+        varsigma=EXP4_VARSIGMA_MAT.copy(),
+        x0=EXP4_X0.copy(),
     )
 
 
 def make_interval_coeff(q0: float, dt: float,
-                         mu_coeff: float, sigma_coeff: float,
-                         eta_coeff: float, epsilon_coeff: float,
-                         gamma_coeff: float) -> IntervalCoefficients:
-    """Build a single IntervalCoefficients for the FOU scaling study."""
+                         mu_coeff: float, sigma_coeff: np.ndarray,
+                         eta_coeff: float, epsilon_coeff: np.ndarray,
+                         gamma_coeff: np.ndarray) -> IntervalCoefficients:
+    """Build a single IntervalCoefficients for the FOU scaling study.
+
+    sigma_coeff: shape (N_m, dim); epsilon_coeff: shape (dim,); gamma_coeff: shape (dim, dim)
+    """
+    sigma_coeff = np.asarray(sigma_coeff)
+    n_m = sigma_coeff.shape[0]
     return IntervalCoefficients(
-        q_prev=np.array([q0]),
-        mu_i=np.array([q0 + mu_coeff * dt]),
-        sigma_i=np.array([[sigma_coeff]]),
-        eta_i=eta_coeff * dt,
-        epsilon_i=np.array([epsilon_coeff]),
-        gamma_i=np.array([[gamma_coeff]]),
+        q_prev=np.full(n_m, q0),
+        mu_i=np.full(n_m, q0 + mu_coeff * dt),
+        sigma_i=sigma_coeff.copy(),
+        eta_i=float(eta_coeff * dt),
+        epsilon_i=np.asarray(epsilon_coeff).copy(),
+        gamma_i=np.asarray(gamma_coeff).copy(),
     )
 
 
@@ -101,7 +106,8 @@ def compute_penalties_at_dt(H: float, dt: float, i_target: int = 5) -> dict:
     except Exception as e:
         return dict(r_i=np.nan, chi_gamma=np.nan, chi_sigma=np.nan, chi_s=np.nan)
 
-    zero_path = np.zeros((i_target, 1))
+    dim = EXP4_BETA.shape[0]
+    zero_path = np.zeros((i_target, dim))
     try:
         x_bar, varsigma_ii = fou.conditional_increment(i_target, zero_path)
     except Exception as e:
