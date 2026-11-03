@@ -1,0 +1,50 @@
+{
+  "hurst_values": [
+    0.2,
+    0.3,
+    0.5,
+    0.7,
+    0.8
+  ],
+  "brownian_chi_sigma_slope": NaN,
+  "H_0p2": {
+    "H": 0.2,
+    "scaling_slopes_chi_gamma": 0.7806809206605503,
+    "scaling_slopes_chi_sigma": NaN,
+    "scaling_slopes_chi_s": 0.3544253214073491,
+    "expected_chi_gamma_slope": 0.8,
+    "expected_chi_sigma_slope": 0.4
+  },
+  "H_0p3": {
+    "H": 0.3,
+    "scaling_slopes_chi_gamma": 1.1791603589296125,
+    "scaling_slopes_chi_sigma": 0.6710266157215636,
+    "scaling_slopes_chi_s": 0.552213573760147,
+    "expected_chi_gamma_slope": 1.2,
+    "expected_chi_sigma_slope": 0.6
+  },
+  "H_0p5": {
+    "H": 0.5,
+    "scaling_slopes_chi_gamma": 1.9825296165030866,
+    "scaling_slopes_chi_sigma": NaN,
+    "scaling_slopes_chi_s": 0.9575069803405719,
+    "expected_chi_gamma_slope": 2.0,
+    "expected_chi_sigma_slope": 1.0
+  },
+  "H_0p7": {
+    "H": 0.7,
+    "scaling_slopes_chi_gamma": 2.7889590640877673,
+    "scaling_slopes_chi_sigma": 1.5936882123387446,
+    "scaling_slopes_chi_s": 1.3674002383886874,
+    "expected_chi_gamma_slope": 2.8,
+    "expected_chi_sigma_slope": 1.4
+  },
+  "H_0p8": {
+    "H": 0.8,
+    "scaling_slopes_chi_gamma": 3.1925475822337064,
+    "scaling_slopes_chi_sigma": 1.3485054104404517,
+    "scaling_slopes_chi_s": 1.5729010376863295,
+    "expected_chi_gamma_slope": 3.2,
+    "expected_chi_sigma_slope": 1.6
+  }
+}

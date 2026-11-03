@@ -1,0 +1,19 @@
+
+=== EXP1 Summary Table ===
+Quantity                                        Value
+------------------------------------------------------
+Funding rate  r                              0.050000
+Indifference price  p*                       0.594307
+Indifference spread  s*                     -0.041852
+Admissible                                       True
+Convexity penalty  χ^γ                       0.025764
+Dimensionality penalty  χ^σ                  0.000000
+Funding penalty  χ^s                         0.078147
+Analytical const  η̌−(1+r)p*                 0.025978
+MC mean(portfolio_pl)                        0.025724
+Pathwise decomp residual std                 1.27e-16
+Edge: χ^γ at γ=0                             0.00e+00
+Edge: χ^σ at ε∈span(σ̌)                      4.83e-35
+Edge: χ^s at p=δ^σ·q                         0.00e+00
+Edge: χ^δ at δ=δ*                            0.00e+00
+------------------------------------------------------

@@ -1,0 +1,19 @@
+{
+  "r": 0.05000000000000005,
+  "r_value": 0.05000000000000005,
+  "delta_star": [
+    -0.8868893215450091,
+    1.851495402806203
+  ],
+  "chi_gamma": 0.025763712114530546,
+  "chi_sigma": 1.232595164407831e-32,
+  "chi_s": 0.07814688494566631,
+  "p_star": 0.5943070006999533,
+  "admissible": true,
+  "mc_pl_mean": 0.02572427205475464,
+  "mc_attribution_residual_std": 1.2650775240847938e-16,
+  "edge_gamma_penalty": 0.0,
+  "edge_sigma_penalty": 4.833632770581246e-35,
+  "edge_s_penalty": 0.0,
+  "edge_strategy_penalty_at_opt": 0.0
+}
